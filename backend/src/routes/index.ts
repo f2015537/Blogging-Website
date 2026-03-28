@@ -1,6 +1,6 @@
 import { Router } from "express";
 import blogRouter from "./blogRoutes";
-import { SignUpSchema, SignInSchema } from "../types";
+import { SignUpSchema, SignInSchema } from "@divyam97/medium-common";
 import bcrypt from "bcrypt";
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../generated/prisma/client";
@@ -22,7 +22,6 @@ router.post("/signup", async (req, res) => {
 
   try {
     const passwordHash = await bcrypt.hash(result.data.password, SALT_ROUNDS);
-
     const createdUser = await prisma.user.create({
       data: {
         email: result.data.email,
@@ -95,6 +94,6 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.use("/blog", blogRouter);
+router.use("/blogs", blogRouter);
 
 export default router;
